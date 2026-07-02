@@ -1,106 +1,191 @@
 # Concurrent Email Validation System
 
-A high-performance, concurrent, multi-stage email validation system built with Python. This tool automates the process of validating email addresses in bulk from an Excel spreadsheet by conducting syntax checking, DNS/MX resolution, direct SMTP mailbox verification, and catch-all domain detection.
+A high-performance, concurrent, multi-stage email validation system built with Python. This project validates email addresses in bulk from Excel while preserving the original architecture exactly:
+
+Input Excel -> Syntax Validation -> DNS/MX Validation -> SMTP Mailbox Validation -> Catch-All Detection -> Excel Reports -> Summary Report -> Logs
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-*   **Multi-Stage Verification Pipeline**: Validates emails across four distinct stages (Syntax → DNS → SMTP → Catch-All) to filter out invalid and problematic mailboxes accurately.
-*   **Parallel Execution**: Uses a Python `ThreadPoolExecutor` for concurrent validation of email lists, drastically reducing processing time for bulk lists.
-*   **Smart Catch-All Detection**: Identifies catch-all domains (domains that accept all incoming email addresses regardless of whether they exist) and caches the results to optimize performance and prevent IP rate-limiting.
-*   **Automatic Excel Automation**: 
-    *   Reads email lists dynamically from an Excel file, automatically scanning for columns matching "Mail ID" (case-insensitive).
-    *   Saves outputs to beautifully styled, color-coded Excel reports using `openpyxl`.
-*   **Robust Logging**: Integrated logging system that outputs status updates to both the console and daily rotated log files.
+- Multi-stage validation pipeline with architecture preserved.
+- Concurrent processing via ThreadPoolExecutor.
+- Hybrid caching: in-memory LRU + persistent SQLite TTL cache.
+- Syntax intelligence: RFC-aware checks, Unicode cleanup, reason codes.
+- Domain intelligence: DNS/MX checks plus report metadata.
+- SMTP intelligence: EHLO/HELO, STARTTLS attempt, feature capture, status interpretation.
+- Catch-all classification with multi-probe strategy and domain-level cache.
+- Rich reporting: enhanced Excel output, conditional formatting, summary worksheet, and plain-text summary report.
+- Production-grade logs with thread context, stage timing, retries, and failure reason traces.
 
 ---
 
-## 🛠️ Validation Pipeline Details
+## Validation Pipeline Details
 
 ```mermaid
 graph TD
     A[Input Excel File] --> B[Syntax Validation]
-    B -- Invalid Format --> C[INVALID_FORMAT]
-    B -- Valid Format --> D[DNS & MX Check]
-    D -- No MX Records / Invalid Domain --> E[INVALID_DOMAIN]
-    D -- Valid MX Records --> F[SMTP Mailbox Check]
-    F -- Connection Failed / Refused --> G[INVALID_MAILBOX / TEMPORARY_FAILURE]
-    F -- SMTP Valid --> H{Catch-All Check}
-    H -- Domain Accepts All Addresses --> I[CATCH_ALL]
-    H -- Standard Domain --> J[VALID]
+  B -- Invalid Format --> C[INVALID_FORMAT]
+  B -- Valid Format --> D[DNS and MX Check]
+  D -- No MX Records or Invalid Domain --> E[INVALID_DOMAIN]
+  D -- Valid MX Records --> F[SMTP Mailbox Check]
+  F -- Connection Failed or Refused --> G[INVALID_MAILBOX or TEMPORARY_FAILURE]
+  F -- SMTP Valid --> H{Catch-All Check}
+  H -- Domain Accepts All Addresses --> I[CATCH_ALL]
+  H -- Standard Domain --> J[VALID]
+  C --> K[Excel Reports]
+  E --> K
+  G --> K
+  I --> K
+  J --> K
+  K --> L[Summary Report]
+  L --> M[Logs]
 ```
 
-1.  **Stage 1: Syntax Validation (`syntax_validator.py`)**  
-    Validates emails using RFC-compliant rules via the `email-validator` library. Checks for standard domain/local-part characters, double dots, spacing, and length.
-2.  **Stage 2: DNS & MX Checker (`dns_checker.py`)**  
-    Queries DNS servers using `dnspython` to check for active Mail Exchanger (MX) records. If no MX records are found, it falls back to standard A/AAAA host records.
-3.  **Stage 3: SMTP Mailbox Verification (`smtp_validator.py`)**  
-    Simulates sending an email by connecting to the remote mail server. It sends the `HELO/EHLO`, `MAIL FROM`, and `RCPT TO` commands to check if the specific mailbox exists without actually sending a mail message.
-4.  **Stage 4: Catch-All Detector (`catch_all_detector.py`)**  
-    Probes the remote server using a randomized local part (e.g., `zz_catchall_probe_xyz123@domain.com`). If the server accepts it, the domain is flagged as `CATCH_ALL`. Results are cached per-domain.
+Plain-language flow:
+
+- Step 1: We read emails from your Excel file.
+- Step 2: We check if each email is written correctly.
+- Step 3: If format is correct, we check whether the domain can receive email.
+- Step 4: If domain is valid, we ask the mail server if the mailbox appears deliverable.
+- Step 5: If mailbox looks valid, we test whether the domain is catch-all.
+- Step 6: Every result is written to Excel, summarized, and logged.
+
+1. Stage 1: Syntax Validation (syntax_validator.py)
+- Normalization (trim, lowercase, Unicode normalization).
+- Control and invisible character checks.
+- RFC-oriented validation via email-validator.
+- Typo-domain suggestion detection.
+- Role-account, free-provider, disposable classification.
+- Duplicate and plus-addressing indicators.
+
+2. Stage 2: DNS Validation (dns_checker.py)
+- Fast fail path for invalid domains.
+- MX lookup and domain existence verification.
+- Additional DNS metadata collection for valid domains.
+- DNS/MX cached responses with TTL.
+
+3. Stage 3: SMTP Validation (smtp_validator.py)
+- SMTP connection and RCPT probe (no mail sent).
+- EHLO with HELO fallback.
+- STARTTLS best effort.
+- SMTP code mapping and explanation.
+- Retry with exponential backoff and bounded runtime.
+- SMTP response caching.
+
+4. Stage 4: Catch-All Detection (catch_all_detector.py)
+- Multiple randomized probes per domain.
+- Classification states:
+  DEFINITE_CATCH_ALL, LIKELY_CATCH_ALL, PARTIAL_CATCH_ALL, NOT_CATCH_ALL, UNKNOWN
+- Cached per domain with TTL.
 
 ---
 
-## ⚙️ Configuration (`config.py`)
+## Configuration (`config.py`)
 
-You can customize the execution behavior inside [config.py](file:///d:/Send_Mail_Automation/email_validator_clean/config.py):
+All tuning parameters are centralized in config.py.
 
-*   `SMTP_SENDER`: The email address used in the `MAIL FROM` handshake (default: `verify@yourdomain.com`).
-*   `SMTP_TIMEOUT` / `SMTP_RETRIES`: Timeout duration (seconds) and retry count for SMTP handshakes.
-*   `MAX_WORKERS`: Number of threads to run in parallel (default: `10`). Increase this for faster processing, or decrease to avoid blocking.
-*   `CATCH_ALL_PROBE`: Local-part string used to detect catch-all domains.
+Important runtime controls:
+
+- MAX_WORKERS
+- DNS_TIMEOUT, DNS_RETRIES
+- SMTP_TIMEOUT, SMTP_RETRIES, SMTP_TOTAL_TIMEOUT_SECONDS
+- SMTP_MAX_MX_HOSTS
+- CATCH_ALL_PROBE_COUNT, CATCH_ALL_RETRIES
+- CACHE_DB_PATH and per-stage TTL values
+
+Speed-first defaults are enabled now to prevent long hangs on poor DNS/SMTP infrastructure.
 
 ---
 
-## 📦 Requirements & Installation
+## Requirements & Installation
 
 ### Prerequisites
-*   **Python 3.10+** (requires modern Union types and generic collections annotations)
+
+- Python 3.12+
 
 ### Installation
-1.  Clone this repository or navigate to the directory:
-    ```bash
-    cd email_validator_clean
-    ```
-2.  Install the required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
 
----
-
-## 💻 Usage
-
-### 1. Prepare your input Excel file
-Ensure your Excel spreadsheet (`.xlsx`) has a column containing email addresses. 
-*   The script automatically looks for a column named **"Mail ID"** (case-insensitive, e.g., `mail id`, `Mail ID`, `MAIL ID`).
-*   If no matching column name is found, it will default to reading the first column in the spreadsheet.
-
-### 2. Run the validation
-Pass the path of your input spreadsheet as a command-line argument:
 ```bash
-python main.py path/to/your/input.xlsx
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
 ---
 
-## 📊 Output Files
+## Usage
 
-All output is saved to the `/output` folder:
+### 1) Validate an input Excel file
 
-1.  **`output/validation_results.xlsx`**:  
-    The primary results file containing every validated email address. The **Mail Status** column is styled with background fills indicating status:
-    *   🟢 **VALID**: Mailbox is active and verified.
-    *   🟡 **INVALID_FORMAT**: Email address syntax is incorrect.
-    *   🔴 **INVALID_DOMAIN**: Domain does not exist or has no mail servers.
-    *   🔴 **INVALID_MAILBOX**: Mailbox does not exist on the server.
-    *   🟠 **ACCESS_DENIED**: SMTP server blocked validation probes.
-    *   🔵 **CATCH_ALL**: Domain accepts all emails (impossible to verify single mailbox status).
-    *   🟢 **TEMPORARY_FAILURE**: Verification timed out or failed temporarily.
-2.  **`output/failed_emails.xlsx`**:  
-    A filtered spreadsheet containing only the failed or problematic emails (all statuses except `VALID`), making it easy to see bounce candidates at a glance.
-3.  **`output/summary_report.txt`**:  
-    A plain-text summary showing validation statistics and percentages.
-4.  **`logs/`**:  
-    Full log output containing diagnostic traces of every syntax check, DNS query, and SMTP conversation.
+```bash
+python main.py input/your_input_file.xlsx
+```
+
+### 2) Run the smoke input used during verification
+
+```bash
+python main.py input/Raw_Email_smoke.xlsx
+```
+
+### 3) Run tests
+
+```bash
+python -m pytest -q
+```
+
+### 4) Optional syntax compile check
+
+```bash
+python -m compileall .
+```
+
+---
+
+## Output Files
+
+All outputs are written to output/ and logs/.
+
+1. output/validation_results.xlsx
+- All records with enriched columns, including:
+  Normalized Email, Domain, Provider, Role Account, Disposable, Free Provider,
+  SMTP Code, SMTP Message, Catch-All Result, Risk Score, Confidence,
+  Deliverability Score, Validation Time (ms), Reason Codes.
+- Autofilter, frozen header row, auto-width columns, conditional formatting.
+- Summary sheet included.
+
+2. output/failed_emails.xlsx
+- Failed/non-valid subset with same enhanced schema and summary sheet.
+
+3. output/summary_report.txt
+- Totals, status distribution, timing stats, top failing domains, provider distribution,
+  deliverability distribution, and cache statistics.
+
+4. logs/email_validator_YYYY-MM-DD.log
+- Detailed execution logs with stage-level outcomes and diagnostics.
+
+---
+
+## Current Verification Status
+
+Latest local verification completed successfully:
+
+- Test suite: 8 passed.
+- Smoke run: `python main.py input/Raw_Email_smoke.xlsx` completed successfully.
+- Runtime improvement confirmed after performance tuning (from long wait to fast completion in current environment).
+
+---
+
+## Troubleshooting
+
+- If runs are slow on your network, reduce MAX_WORKERS.
+- If DNS is unstable, keep DNS_TIMEOUT low and DNS_RETRIES at 0 or 1 for fail-fast behavior.
+- If SMTP is blocked (port 25 restrictions), expect TEMPORARY_FAILURE or ACCESS_DENIED classifications.
+- If cache feels stale between repeated experiments, reduce TTL values in config.py.
+
+---
+
+## Limitations
+
+- SMTP-level validation is provider-dependent and not universally deterministic.
+- Catch-all detection is probabilistic by design.
+- This system does not and cannot reliably prove user activity, mailbox ownership, or inbox usage state.

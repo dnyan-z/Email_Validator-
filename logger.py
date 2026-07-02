@@ -1,23 +1,15 @@
-"""
-logger.py
----------
-Centralised logging setup for the Email Validation System.
-
-Creates two handlers:
-  - File handler  → logs/email_validator_YYYY-MM-DD.log
-  - Console handler → INFO+ messages on stdout
-
-Usage:
-    from logger import get_logger
-    log = get_logger(__name__)
-    log.info("Starting validation…")
-"""
+"""Centralized logging setup for the Email Validation System."""
 
 import logging
 import os
 from datetime import date
 
-from config import LOG_DIR
+from config import LOG_DIR, LOG_LEVEL, LOG_THREAD_INFO, LOG_TO_CONSOLE
+
+
+def _resolve_log_level() -> int:
+    level_name = (LOG_LEVEL or "DEBUG").upper()
+    return getattr(logging, level_name, logging.DEBUG)
 
 
 def get_logger(name: str) -> logging.Logger:
@@ -44,24 +36,30 @@ def get_logger(name: str) -> logging.Logger:
     if logger.handlers:
         return logger
 
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(_resolve_log_level())
+
+    thread_fmt = " | thread=%(threadName)s" if LOG_THREAD_INFO else ""
 
     fmt = logging.Formatter(
-        "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+        "%(asctime)s | %(levelname)-8s | %(name)s"
+        + thread_fmt
+        + " | %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     # File handler – captures DEBUG and above
     fh = logging.FileHandler(log_file, encoding="utf-8")
-    fh.setLevel(logging.DEBUG)
+    fh.setLevel(_resolve_log_level())
     fh.setFormatter(fmt)
 
     # Console handler – INFO and above only
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    ch.setFormatter(fmt)
+    if LOG_TO_CONSOLE:
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.INFO)
+        ch.setFormatter(fmt)
+        logger.addHandler(ch)
 
     logger.addHandler(fh)
-    logger.addHandler(ch)
+    logger.propagate = False
 
     return logger

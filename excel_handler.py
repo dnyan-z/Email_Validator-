@@ -15,11 +15,12 @@ Output adds:
 """
 
 import os
+from collections import Counter
 
 import pandas as pd
-from openpyxl import Workbook, load_workbook
+from openpyxl import Workbook
+from openpyxl.formatting.rule import CellIsRule
 from openpyxl.styles import Alignment, Font, PatternFill
-from openpyxl.utils.dataframe import dataframe_to_rows
 
 from config import (
     FAILED_EXCEL,
@@ -85,10 +86,10 @@ def write_results(results: list[dict]) -> None:
     """
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    df = pd.DataFrame(results)[["email", "status", "reason", "smtp_response"]]
-    df.columns = ["Mail ID", "Mail Status", "Validation Reason", "SMTP Response"]
+    df = _build_output_dataframe(results)
 
     wb = _build_workbook(df, sheet_name="Validation Results")
+    _add_summary_sheet(wb, results)
     wb.save(OUTPUT_EXCEL)
     log.info("Results saved → %s", OUTPUT_EXCEL)
 
@@ -109,10 +110,10 @@ def write_failed_emails(results: list[dict]) -> None:
         log.info("No failed emails – skipping failed_emails.xlsx")
         return
 
-    df = pd.DataFrame(failed)[["email", "status", "reason", "smtp_response"]]
-    df.columns = ["Mail ID", "Mail Status", "Validation Reason", "SMTP Response"]
+    df = _build_output_dataframe(failed)
 
     wb = _build_workbook(df, sheet_name="Failed Emails")
+    _add_summary_sheet(wb, failed)
     wb.save(FAILED_EXCEL)
     log.info("Failed emails saved → %s (%d rows)", FAILED_EXCEL, len(failed))
 
@@ -160,6 +161,8 @@ def _build_workbook(df: pd.DataFrame, sheet_name: str) -> Workbook:
 
     # ── Data rows ─────────────────────────────────────────────────────────────
     status_col_idx = list(df.columns).index("Mail Status") + 1
+    risk_col_idx = list(df.columns).index("Risk Score") + 1
+    deliver_col_idx = list(df.columns).index("Deliverability Score") + 1
 
     for row_idx, row in enumerate(df.itertuples(index=False), start=2):
         for col_idx, value in enumerate(row, start=1):
@@ -174,13 +177,121 @@ def _build_workbook(df: pd.DataFrame, sheet_name: str) -> Workbook:
             "solid", start_color=colour
         )
 
-    # ── Column widths ─────────────────────────────────────────────────────────
-    col_widths = [35, 22, 45, 20]
-    for i, width in enumerate(col_widths, start=1):
-        ws.column_dimensions[
-            ws.cell(row=1, column=i).column_letter
-        ].width = width
+    # ── Workbook usability features ──────────────────────────────────────────
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = ws.dimensions
+
+    # Auto width with a cap to keep files readable.
+    for col in ws.columns:
+        col_letter = col[0].column_letter
+        max_len = max(len(str(cell.value)) if cell.value is not None else 0 for cell in col)
+        ws.column_dimensions[col_letter].width = min(60, max(12, max_len + 2))
 
     ws.row_dimensions[1].height = 20
 
+    # Conditional formatting for risk and deliverability.
+    ws.conditional_formatting.add(
+        f"{ws.cell(row=2, column=risk_col_idx).coordinate}:{ws.cell(row=ws.max_row, column=risk_col_idx).coordinate}",
+        CellIsRule(operator="greaterThanOrEqual", formula=["70"], stopIfTrue=True, fill=PatternFill("solid", start_color="FFC7CE")),
+    )
+    ws.conditional_formatting.add(
+        f"{ws.cell(row=2, column=deliver_col_idx).coordinate}:{ws.cell(row=ws.max_row, column=deliver_col_idx).coordinate}",
+        CellIsRule(operator="lessThan", formula=["50"], stopIfTrue=True, fill=PatternFill("solid", start_color="FFEB9C")),
+    )
+
     return wb
+
+
+def _build_output_dataframe(results: list[dict]) -> pd.DataFrame:
+    df = pd.DataFrame(results)
+    for column in [
+        "normalized_email",
+        "domain",
+        "provider_classification",
+        "is_role_account",
+        "is_disposable",
+        "is_free_provider",
+        "smtp_code",
+        "smtp_message",
+        "catch_all_result",
+        "risk_score",
+        "confidence_score",
+        "deliverability_score",
+        "validation_duration_ms",
+        "reason_code",
+        "email",
+        "status",
+        "reason",
+        "smtp_response",
+    ]:
+        if column not in df.columns:
+            df[column] = ""
+
+    df = df[
+        [
+            "email",
+            "normalized_email",
+            "domain",
+            "provider_classification",
+            "status",
+            "reason",
+            "reason_code",
+            "is_role_account",
+            "is_disposable",
+            "is_free_provider",
+            "smtp_code",
+            "smtp_message",
+            "smtp_response",
+            "catch_all_result",
+            "risk_score",
+            "confidence_score",
+            "deliverability_score",
+            "validation_duration_ms",
+        ]
+    ]
+    df.columns = [
+        "Mail ID",
+        "Normalized Email",
+        "Domain",
+        "Provider",
+        "Mail Status",
+        "Validation Reason",
+        "Reason Codes",
+        "Role Account",
+        "Disposable",
+        "Free Provider",
+        "SMTP Code",
+        "SMTP Message",
+        "SMTP Response",
+        "Catch-All Result",
+        "Risk Score",
+        "Confidence",
+        "Deliverability Score",
+        "Validation Time (ms)",
+    ]
+    return df
+
+
+def _add_summary_sheet(wb: Workbook, results: list[dict]) -> None:
+    ws = wb.create_sheet(title="Summary")
+    statuses = Counter(r.get("status", "UNKNOWN") for r in results)
+    domains = Counter(r.get("domain", "") for r in results if r.get("domain"))
+
+    ws.append(["Metric", "Value"])
+    ws.append(["Total Emails", len(results)])
+    ws.append(["Valid", statuses.get("VALID", 0)])
+    ws.append(["Invalid", statuses.get("INVALID_FORMAT", 0) + statuses.get("INVALID_DOMAIN", 0) + statuses.get("INVALID_MAILBOX", 0)])
+    ws.append(["Catch-all", statuses.get("CATCH_ALL", 0)])
+    ws.append(["Temporary failures", statuses.get("TEMPORARY_FAILURE", 0)])
+    ws.append(["Unknown", statuses.get("UNKNOWN", 0)])
+    ws.append([])
+    ws.append(["Top Domains", "Count"])
+    for domain, count in domains.most_common(10):
+        ws.append([domain, count])
+
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = ws.dimensions
+    for col in ws.columns:
+        col_letter = col[0].column_letter
+        max_len = max(len(str(cell.value)) if cell.value is not None else 0 for cell in col)
+        ws.column_dimensions[col_letter].width = min(40, max(12, max_len + 2))
