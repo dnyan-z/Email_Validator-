@@ -25,13 +25,31 @@ Input Excel -> Syntax Validation -> DNS/MX Validation -> SMTP Mailbox Validation
 ```mermaid
 graph TD
     A[Input Excel File] --> B[Syntax Validation]
-    B --> C[DNS and MX Validation]
-    C --> D[SMTP Mailbox Validation]
-    D --> E[Catch-All Detection]
-    E --> F[Excel Reports]
-    F --> G[Summary Report]
-    G --> H[Logs]
+  B -- Invalid Format --> C[INVALID_FORMAT]
+  B -- Valid Format --> D[DNS and MX Check]
+  D -- No MX Records or Invalid Domain --> E[INVALID_DOMAIN]
+  D -- Valid MX Records --> F[SMTP Mailbox Check]
+  F -- Connection Failed or Refused --> G[INVALID_MAILBOX or TEMPORARY_FAILURE]
+  F -- SMTP Valid --> H{Catch-All Check}
+  H -- Domain Accepts All Addresses --> I[CATCH_ALL]
+  H -- Standard Domain --> J[VALID]
+  C --> K[Excel Reports]
+  E --> K
+  G --> K
+  I --> K
+  J --> K
+  K --> L[Summary Report]
+  L --> M[Logs]
 ```
+
+Plain-language flow:
+
+- Step 1: We read emails from your Excel file.
+- Step 2: We check if each email is written correctly.
+- Step 3: If format is correct, we check whether the domain can receive email.
+- Step 4: If domain is valid, we ask the mail server if the mailbox appears deliverable.
+- Step 5: If mailbox looks valid, we test whether the domain is catch-all.
+- Step 6: Every result is written to Excel, summarized, and logged.
 
 1. Stage 1: Syntax Validation (syntax_validator.py)
 - Normalization (trim, lowercase, Unicode normalization).
