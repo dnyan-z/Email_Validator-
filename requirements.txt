@@ -1,0 +1,9 @@
+# Email Validation System – Python dependencies
+#
+# Install with:
+#   pip install -r requirements.txt
+
+dnspython>=2.6.0          # DNS lookups (MX records, A/AAAA)
+email-validator>=2.1.0    # RFC-compliant syntax checking
+pandas>=2.0.0             # Read/write Excel data
+openpyxl>=3.1.0           # Excel formatting and styling
