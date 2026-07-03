@@ -21,7 +21,7 @@ SMTP_RETRIES = 3
 SMTP_MAX_BACKOFF_SECONDS = 45
 
 # Hard cap for total time spent in SMTP host attempts per email.
-SMTP_TOTAL_TIMEOUT_SECONDS = 12
+SMTP_TOTAL_TIMEOUT_SECONDS = 45
 
 # Max MX hosts to attempt per email (priority order from DNS).
 SMTP_MAX_MX_HOSTS = 5

@@ -67,77 +67,54 @@ def get_domain(email: str) -> str:
 
 def check_domain(email: str) -> dict:
     """
-    Verify that the email's domain exists and has MX records.
+    Verify that the email's domain exists and provide SMTP targets.
 
-    Parameters
-    ----------
-    email : str
-        Normalised email address.
+    RFC 5321 behavior:
+      - If MX records exist: use them in priority order.
+      - If no MX records exist (or MX is absent): fall back to A/AAAA for the domain.
+      - Never mark INVALID_DOMAIN if the domain exists via A/AAAA.
 
-    Returns
-    -------
-    dict with keys:
-        email         – passed through unchanged
-        status        – STATUS_VALID | STATUS_INVALID_DOMAIN
-        reason        – human-readable explanation
-        smtp_response – empty at this stage
-        mx_hosts      – list of MX hostnames sorted by priority (empty on fail)
+    Returns dict keys:
+      email, status, reason, smtp_response, mx_hosts, dns_report, dns_latency_ms
     """
     start = time.perf_counter()
     domain = get_domain(email)
 
-    mx_hosts = _get_mx_hosts(domain)
-    exists = _domain_exists_fast(domain, mx_hosts)
     latency_ms = round((time.perf_counter() - start) * 1000, 2)
 
-    if not exists:
-        reason = f"Domain '{domain}' does not exist"
-        log.debug("DNS FAIL | %s | %s", email, reason)
-        domain_report = {
-            "exists": False,
-            "mx_hosts": [],
-            "mx_count": 0,
-            "latency_ms": latency_ms,
-            "fallback_behavior": "FAST_EXISTENCE_CHECK",
-        }
-        return _result(email, STATUS_INVALID_DOMAIN, reason, [], domain_report, latency_ms)
+    mx_hosts, mx_report = _get_mx_hosts(domain, build_detailed_report=True)
 
-    if not mx_hosts:
-        # RFC-compliant fallback: if no MX records exist, SMTP delivery may fall back
-        # to A/AAAA lookup for the domain itself.
-        # First determine if the domain appears to exist via fast A/AAAA check.
-        domain_exists = _domain_exists_fast(domain, mx_hosts)
+    # MX exists (after validation/sanitization)
+    if mx_hosts:
+        domain_report = _get_domain_report(domain)
+        domain_report["mx_hosts"] = mx_hosts
+        domain_report["mx_count"] = len(mx_hosts)
+        domain_report["mx_raw_report"] = mx_report
+        domain_report["latency_ms"] = latency_ms
+        log.debug("DNS OK (MX) | %s | MX=%s | latency_ms=%.2f", email, mx_hosts, latency_ms)
+        return _result(email, STATUS_VALID, "Domain and MX records exist", mx_hosts, domain_report, latency_ms)
 
-        if domain_exists:
-            smtp_fallback_hosts = [domain]
-            reason = f"Domain '{domain}' has no MX records; using A/AAAA fallback for SMTP"
-            log.debug("DNS OK (MX fallback) | %s | %s", email, reason)
-            domain_report = {
-                "exists": True,
-                "mx_hosts": smtp_fallback_hosts,
-                "mx_count": 1,
-                "latency_ms": latency_ms,
-                "fallback_behavior": "A/AAAA_FALLBACK_SMTP_HOST=DOMAIN",
-            }
-            return _result(email, STATUS_VALID, reason, smtp_fallback_hosts, domain_report, latency_ms)
+    # No (usable) MX hosts: fall back to A/AAAA existence.
+    has_a = _domain_has_record(domain, "A")
+    has_aaaa = _domain_has_record(domain, "AAAA")
+    if has_a or has_aaaa:
+        smtp_fallback_hosts = [domain]
+        domain_report = _get_domain_report(domain)
+        domain_report["mx_hosts"] = []
+        domain_report["mx_count"] = 0
+        domain_report["mx_raw_report"] = mx_report
+        domain_report["fallback_behavior"] = "A/AAAA_FALLBACK_SMTP_HOST=DOMAIN"
+        domain_report["latency_ms"] = latency_ms
+        reason = f"Domain '{domain}' has no usable MX; using A/AAAA fallback for SMTP"
+        log.debug("DNS OK (A/AAAA fallback) | %s | %s", email, reason)
+        return _result(email, STATUS_VALID, reason, smtp_fallback_hosts, domain_report, latency_ms)
 
-        reason = f"Domain '{domain}' has no MX records"
-        log.debug("DNS FAIL | %s | %s", email, reason)
-        domain_report = {
-            "exists": True,
-            "mx_hosts": [],
-            "mx_count": 0,
-            "latency_ms": latency_ms,
-            "fallback_behavior": "FAST_EXISTENCE_CHECK",
-        }
-        return _result(email, STATUS_INVALID_DOMAIN, reason, [], domain_report, latency_ms)
-
+    reason = f"Domain '{domain}' does not exist (no MX and no A/AAAA)"
     domain_report = _get_domain_report(domain)
-    domain_report["mx_hosts"] = mx_hosts
-    domain_report["mx_count"] = len(mx_hosts)
+    domain_report["fallback_behavior"] = "FAST_FAIL_NO_MX_NO_AAAA"
     domain_report["latency_ms"] = latency_ms
-    log.debug("DNS OK | %s | MX=%s | latency_ms=%.2f", email, mx_hosts, latency_ms)
-    return _result(email, STATUS_VALID, "Domain and MX records exist", mx_hosts, domain_report, latency_ms)
+    log.debug("DNS FAIL | %s | %s", email, reason)
+    return _result(email, STATUS_INVALID_DOMAIN, reason, [], domain_report, latency_ms)
 
 
 # ── Private helpers ───────────────────────────────────────────────────────────
@@ -170,46 +147,58 @@ def _query_records(name: str, record_type: str) -> tuple[list[str], float]:
     return [], 120.0
 
 
-def _get_mx_hosts(domain: str) -> list[str]:
+def _get_mx_hosts(domain: str, build_detailed_report: bool = False) -> tuple[list[str], dict]:
     """
-    Return a list of MX hostnames sorted by preference (lowest = highest prio).
+    Return usable MX hostnames in priority order.
 
-    Parameters
-    ----------
-    domain : str
-        The domain to query for MX records.
+    - RFC 5321: MX exchange must be a domain name, not empty/malformed.
+    - Skip malformed or empty MX exchange names.
+    - Cache usable MX results.
 
-    Returns
-    -------
-    list[str]
-        Sorted MX hostnames, or an empty list if none are found.
+    Returns: (mx_hosts, report)
     """
     cached = _mx_cache.get(domain)
     if cached is not None:
-        return list(cached)
+        mx_hosts = list(cached)
+        return mx_hosts, {"cached": True, "invalid_exchanges_skipped": 0}
+
+    report: dict = {"cached": False, "invalid_exchanges_skipped": 0}
 
     try:
         answers = _resolver.resolve(domain, "MX")
         sorted_mx = sorted(answers, key=lambda r: r.preference)
-        mx_hosts = [str(r.exchange).rstrip(".") for r in sorted_mx]
+
+        usable: list[str] = []
+        invalid_count = 0
+        for r in sorted_mx:
+            exchange = str(r.exchange).rstrip(".").strip()
+            if not exchange:
+                invalid_count += 1
+                continue
+            # Basic hostname/domain sanity
+            if " " in exchange or exchange.startswith(".") or exchange.endswith("."):
+                invalid_count += 1
+                continue
+            usable.append(exchange)
+
+        report["invalid_exchanges_skipped"] = invalid_count
         ttl = int(getattr(getattr(answers, "rrset", None), "ttl", MX_CACHE_TTL_SECONDS))
-        _mx_cache.set(domain, mx_hosts, ttl_seconds=max(60, ttl))
-        return mx_hosts
+        _mx_cache.set(domain, usable, ttl_seconds=max(60, ttl))
+        if build_detailed_report:
+            report["mx_priority_pairs"] = [
+                {"preference": r.preference, "exchange": str(r.exchange).rstrip(".").strip()}
+                for r in sorted_mx
+            ]
+        return usable, report
+
     except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer, dns.exception.Timeout, dns.resolver.NoNameservers):
         _mx_cache.set(domain, [], ttl_seconds=120)
-        return []
+        return [], report
 
 
-def _domain_exists_fast(domain: str, mx_hosts: list[str]) -> bool:
-    if mx_hosts:
-        return True
-
-    # Keep this intentionally minimal for fail-fast behavior on resolver issues.
-    answers, _ = _query_records(domain, "A")
-    if answers:
-        return True
-
-    return False
+def _domain_has_record(domain: str, record_type: str) -> bool:
+    answers, _ = _query_records(domain, record_type)
+    return bool(answers)
 
 
 def _get_domain_report(domain: str) -> dict:
@@ -228,7 +217,7 @@ def _get_domain_report(domain: str) -> dict:
         dkim_txt, _ = _query_records(dkim_name, "TXT")
         dkim_hits[selector] = any("v=dkim1" in item.lower() for item in dkim_txt)
 
-    mx_hosts = _get_mx_hosts(domain)
+    mx_hosts, _ = _get_mx_hosts(domain)
     mx_consistent = len(mx_hosts) == len(set(mx_hosts))
     tld = domain.rsplit(".", 1)[-1].lower() if "." in domain else ""
     domain_type = _infer_domain_type(domain, tld)
