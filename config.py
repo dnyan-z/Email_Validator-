@@ -9,22 +9,22 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # -- SMTP Settings -------------------------------------------------------------
 
 # Sender address used during SMTP handshake (never actually sends mail)
-SMTP_SENDER = "verify@yourdomain.com"
+SMTP_SENDER = "manasranjandikshit01@gmail.com"
 
 # Seconds to wait for an SMTP connection before timing out
-SMTP_TIMEOUT = 4
+SMTP_TIMEOUT = 15
 
 # How many times to retry a failed SMTP connection
-SMTP_RETRIES = 1
+SMTP_RETRIES = 3
 
 # Max seconds for exponential retry backoff per SMTP retry attempt.
-SMTP_MAX_BACKOFF_SECONDS = 20
+SMTP_MAX_BACKOFF_SECONDS = 45
 
 # Hard cap for total time spent in SMTP host attempts per email.
 SMTP_TOTAL_TIMEOUT_SECONDS = 12
 
 # Max MX hosts to attempt per email (priority order from DNS).
-SMTP_MAX_MX_HOSTS = 2
+SMTP_MAX_MX_HOSTS = 5
 
 # Reuse SMTP sessions per thread when possible.
 SMTP_CONNECTION_REUSE = True
@@ -36,20 +36,20 @@ SMTP_SESSION_CACHE_SIZE = 8
 SMTP_RETRY_DELAY = 1
 
 # SMTP command timeout for slow/tarpit servers.
-SMTP_COMMAND_TIMEOUT = 12
+SMTP_COMMAND_TIMEOUT = 20
 
 # -- DNS Settings --------------------------------------------------------------
 
 # Seconds to wait for a DNS response
-DNS_TIMEOUT = 2
+DNS_TIMEOUT = 8
 
 # DNS retry and exponential backoff controls.
-DNS_RETRIES = 0
+DNS_RETRIES = 2
 DNS_RETRY_DELAY = 1
 DNS_MAX_BACKOFF_SECONDS = 10
 
 # Optional DNS resolver nameservers list. Empty means system defaults.
-DNS_NAMESERVERS: list[str] = []
+DNS_NAMESERVERS: list[str] = ["8.8.8.8", "1.1.1.1"]
 
 # Optional DKIM selectors to probe for TXT records (best effort only).
 DKIM_SELECTORS = ["default", "selector1", "selector2", "google", "k1", "mail"]
@@ -70,7 +70,7 @@ CACHE_MEMORY_MAXSIZE = 5000
 # -- Threading / Performance ---------------------------------------------------
 
 # Number of parallel worker threads for bulk validation
-MAX_WORKERS = 10
+MAX_WORKERS = 20
 
 # Max emails validated in a single domain-aware batch.
 DOMAIN_BATCH_SIZE = 200

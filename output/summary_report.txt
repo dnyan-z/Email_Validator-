@@ -1,43 +1,48 @@
 ======================================================================
   EMAIL VALIDATION SUMMARY REPORT
 ======================================================================
-  Total emails               : 8
+  Total emails               : 27
   Valid                      : 0
-  Invalid                    : 8
+  Invalid                    : 2
   Disposable                 : 0
-  Role accounts              : 3
+  Role accounts              : 12
   Catch-all                  : 0
   Temporary failures         : 0
-  Unknown                    : 0
-  Average validation time ms : 2080.17
-  Fastest validation ms      : 2046.82
-  Slowest validation ms      : 2121.88
-  DNS failures               : 8
+  Unknown                    : 25
+  Average validation time ms : 9646.55
+  Fastest validation ms      : 178.56
+  Slowest validation ms      : 30204.35
+  DNS failures               : 2
   SMTP failures              : 0
 ----------------------------------------------------------------------
   Status distribution:
-    INVALID_DOMAIN                8 (100.0%)
+    INVALID_DOMAIN                2 (  7.4%)
+    UNKNOWN                      25 ( 92.6%)
 ----------------------------------------------------------------------
   Top failing domains:
+    gmail.com                                     3
+    dentalkart.com                                3
     nakednature.in                                2
+    oracura.in                                    2
+    cannarma.com                                  2
+    thedearist.com                                2
     koraorganics.com                              1
     oneloveorganics.com                           1
     wareiq.com                                    1
     theorganicriot.com                            1
-    forest-riot.com                               1
-    nakedallnatural.com                           1
 ----------------------------------------------------------------------
   Top providers:
-    CORPORATE_OR_CUSTOM                           8
+    CORPORATE_OR_CUSTOM                          24
+    FREE                                          3
 ----------------------------------------------------------------------
   Deliverability distribution:
     90-100                                        0
     75-89                                         0
     50-74                                         0
-    0-49                                          8
+    0-49                                         27
 ----------------------------------------------------------------------
   Cache hit ratios:
-    DNS cache stats      : {'dns': {'memory_hits': 1, 'memory_misses': 7, 'memory_sets': 7, 'memory_hit_ratio': 0.125, 'sqlite_hits': 7, 'sqlite_misses': 8, 'sqlite_sets': 8, 'sqlite_hit_ratio': 0.4666666666666667}, 'mx': {'memory_hits': 0, 'memory_misses': 8, 'memory_sets': 8, 'memory_hit_ratio': 0.0, 'sqlite_hits': 7, 'sqlite_misses': 8, 'sqlite_sets': 8, 'sqlite_hit_ratio': 0.4666666666666667}}
-    SMTP cache stats     : {'memory_hits': 0, 'memory_misses': 0, 'memory_sets': 0, 'memory_hit_ratio': 0.0, 'sqlite_hits': 0, 'sqlite_misses': 0, 'sqlite_sets': 0, 'sqlite_hit_ratio': 0.0}
+    DNS cache stats      : {'dns': {'memory_hits': 84, 'memory_misses': 256, 'memory_sets': 256, 'memory_hit_ratio': 0.24705882352941178, 'sqlite_hits': 102, 'sqlite_misses': 181, 'sqlite_sets': 181, 'sqlite_hit_ratio': 0.36042402826855124}, 'mx': {'memory_hits': 24, 'memory_misses': 27, 'memory_sets': 27, 'memory_hit_ratio': 0.47058823529411764, 'sqlite_hits': 102, 'sqlite_misses': 181, 'sqlite_sets': 181, 'sqlite_hit_ratio': 0.36042402826855124}}
+    SMTP cache stats     : {'memory_hits': 0, 'memory_misses': 25, 'memory_sets': 25, 'memory_hit_ratio': 0.0, 'sqlite_hits': 0, 'sqlite_misses': 25, 'sqlite_sets': 25, 'sqlite_hit_ratio': 0.0}
     Catch-all cache stats: {'memory_hits': 0, 'memory_misses': 0, 'memory_sets': 0, 'memory_hit_ratio': 0.0, 'sqlite_hits': 0, 'sqlite_misses': 0, 'sqlite_sets': 0, 'sqlite_hit_ratio': 0.0}
 ======================================================================

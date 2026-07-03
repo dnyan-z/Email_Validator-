@@ -103,6 +103,24 @@ def check_domain(email: str) -> dict:
         return _result(email, STATUS_INVALID_DOMAIN, reason, [], domain_report, latency_ms)
 
     if not mx_hosts:
+        # RFC-compliant fallback: if no MX records exist, SMTP delivery may fall back
+        # to A/AAAA lookup for the domain itself.
+        # First determine if the domain appears to exist via fast A/AAAA check.
+        domain_exists = _domain_exists_fast(domain, mx_hosts)
+
+        if domain_exists:
+            smtp_fallback_hosts = [domain]
+            reason = f"Domain '{domain}' has no MX records; using A/AAAA fallback for SMTP"
+            log.debug("DNS OK (MX fallback) | %s | %s", email, reason)
+            domain_report = {
+                "exists": True,
+                "mx_hosts": smtp_fallback_hosts,
+                "mx_count": 1,
+                "latency_ms": latency_ms,
+                "fallback_behavior": "A/AAAA_FALLBACK_SMTP_HOST=DOMAIN",
+            }
+            return _result(email, STATUS_VALID, reason, smtp_fallback_hosts, domain_report, latency_ms)
+
         reason = f"Domain '{domain}' has no MX records"
         log.debug("DNS FAIL | %s | %s", email, reason)
         domain_report = {

@@ -459,3 +459,321 @@ NameError: name '_attach_scores' is not defined
 2026-07-02 20:03:21 | INFO     | excel_handler | thread=MainThread | Failed emails saved → output/failed_emails.xlsx (8 rows)
 2026-07-02 20:03:21 | INFO     | __main__ | thread=MainThread | Summary report saved → output/summary_report.txt
 2026-07-02 20:03:21 | INFO     | __main__ | thread=MainThread | All done. Check the 'output/' folder for results.
+2026-07-02 20:34:18 | INFO     | __main__ | thread=MainThread | ============================================================
+2026-07-02 20:34:18 | INFO     | __main__ | thread=MainThread | Email Validation System – starting
+2026-07-02 20:34:18 | INFO     | __main__ | thread=MainThread | Input file: input/Raw_Email_smoke.xlsx
+2026-07-02 20:34:18 | INFO     | excel_handler | thread=MainThread | Reading input file: input/Raw_Email_smoke.xlsx
+2026-07-02 20:37:38 | INFO     | __main__ | thread=MainThread | ============================================================
+2026-07-02 20:37:38 | INFO     | __main__ | thread=MainThread | Email Validation System – starting
+2026-07-02 20:37:38 | INFO     | __main__ | thread=MainThread | Input file: input/Raw_Email_smoke.xlsx
+2026-07-02 20:37:38 | INFO     | excel_handler | thread=MainThread | Reading input file: input/Raw_Email_smoke.xlsx
+2026-07-02 20:37:38 | INFO     | excel_handler | thread=MainThread | Using column '6' for email addresses
+2026-07-02 20:37:38 | INFO     | excel_handler | thread=MainThread | Found 9 email addresses
+2026-07-02 20:37:38 | INFO     | __main__ | thread=MainThread | Validating 9 emails with 10 workers...
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 2.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | koraorganics.com A | errors=['The resolution lifetime expired after 2.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 2.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | wareiq.com A | errors=['The resolution lifetime expired after 2.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | oneloveorganics.com A | errors=['The resolution lifetime expired after 2.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | theorganicriot.com A | errors=['The resolution lifetime expired after 2.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | forest-riot.com A | errors=['The resolution lifetime expired after 2.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | nakedallnatural.com A | errors=['The resolution lifetime expired after 2.006 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:37:42 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:37:42 | INFO     | __main__ | thread=MainThread | Validation complete in 4.2 seconds
+2026-07-02 20:37:42 | INFO     | excel_handler | thread=MainThread | Results saved → output/validation_results.xlsx
+2026-07-02 20:37:42 | INFO     | excel_handler | thread=MainThread | Failed emails saved → output/failed_emails.xlsx (9 rows)
+2026-07-02 20:37:42 | INFO     | __main__ | thread=MainThread | Summary report saved → output/summary_report.txt
+2026-07-02 20:37:42 | INFO     | __main__ | thread=MainThread | All done. Check the 'output/' folder for results.
+2026-07-02 20:39:46 | INFO     | __main__ | thread=MainThread | ============================================================
+2026-07-02 20:39:46 | INFO     | __main__ | thread=MainThread | Email Validation System – starting
+2026-07-02 20:39:46 | INFO     | __main__ | thread=MainThread | Input file: input/Raw_Email.xlsx
+2026-07-02 20:39:46 | INFO     | excel_handler | thread=MainThread | Reading input file: input/Raw_Email.xlsx
+2026-07-02 20:39:46 | INFO     | excel_handler | thread=MainThread | Using column 'Scraped_Email' for email addresses
+2026-07-02 20:39:46 | INFO     | excel_handler | thread=MainThread | Found 27 email addresses
+2026-07-02 20:39:46 | INFO     | __main__ | thread=MainThread | Validating 27 emails with 10 workers...
+2026-07-02 20:39:50 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.008 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:50 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | example@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:39:50 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | example@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.003 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | mohammadweex21@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | mohammadweex21@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.010 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 2.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | support@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | support@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 2.003 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | cs@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | cs@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | oracura.in A | errors=['The resolution lifetime expired after 2.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 2.006 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | support@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | support@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | returns@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | returns@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | oracura.in A | errors=['The resolution lifetime expired after 2.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 2.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | hr@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | hr@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:39:51 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:39:51 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | cannarma.com A | errors=['The resolution lifetime expired after 2.003 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | info@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | info@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | cannarma.com A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | support@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | support@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | thedearist.com A | errors=['The resolution lifetime expired after 2.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | koraorganics.com A | errors=['The resolution lifetime expired after 2.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | community@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | community@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | thedearist.com A | errors=['The resolution lifetime expired after 2.000 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.; Server Do53:218.248.112.225@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | admin@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | admin@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | oneloveorganics.com A | errors=['The resolution lifetime expired after 2.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | theorganicriot.com A | errors=['The resolution lifetime expired after 2.010 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | wareiq.com A | errors=['The resolution lifetime expired after 2.012 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | forest-riot.com A | errors=['The resolution lifetime expired after 2.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | nakedallnatural.com A | errors=['The resolution lifetime expired after 2.001 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:39:55 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:39:55 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | gq.comal A | errors=['The resolution lifetime expired after 2.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | cuma.meroan@gq.comal | Domain 'gq.comal' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | cuma.meroan@gq.comal | Domain 'gq.comal' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | thebrownbear.ca A | errors=['The resolution lifetime expired after 2.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | info@thebrownbear.ca | Domain 'thebrownbear.ca' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | info@thebrownbear.ca | Domain 'thebrownbear.ca' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | mycarmesi.com A | errors=['The resolution lifetime expired after 2.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | daybreak-official.com A | errors=['The resolution lifetime expired after 2.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | care@mycarmesi.com | Domain 'mycarmesi.com' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | care@mycarmesi.com | Domain 'mycarmesi.com' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | betterdaysco.com A | errors=['The resolution lifetime expired after 2.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | support@daybreak-official.com | Domain 'daybreak-official.com' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | support@daybreak-official.com | Domain 'daybreak-official.com' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | customersupport@betterdaysco.com | Domain 'betterdaysco.com' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | customersupport@betterdaysco.com | Domain 'betterdaysco.com' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | daysahead.nl A | errors=['The resolution lifetime expired after 2.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | info@daysahead.nl | Domain 'daysahead.nl' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | info@daysahead.nl | Domain 'daysahead.nl' does not exist
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | territoryahead.com A | errors=['The resolution lifetime expired after 2.006 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:39:59 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | messages@territoryahead.com | Domain 'territoryahead.com' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | messages@territoryahead.com | Domain 'territoryahead.com' does not exist
+2026-07-02 20:39:59 | INFO     | __main__ | thread=MainThread | Validation complete in 12.3 seconds
+2026-07-02 20:45:19 | INFO     | __main__ | thread=MainThread | ============================================================
+2026-07-02 20:45:19 | INFO     | __main__ | thread=MainThread | Email Validation System – starting
+2026-07-02 20:45:19 | INFO     | __main__ | thread=MainThread | Input file: input/Raw_Email.xlsx
+2026-07-02 20:45:19 | INFO     | excel_handler | thread=MainThread | Reading input file: input/Raw_Email.xlsx
+2026-07-02 20:45:19 | INFO     | excel_handler | thread=MainThread | Using column 'Scraped_Email' for email addresses
+2026-07-02 20:45:19 | INFO     | excel_handler | thread=MainThread | Found 27 email addresses
+2026-07-02 20:45:19 | INFO     | __main__ | thread=MainThread | Validating 27 emails with 10 workers...
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | example@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | example@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 2.006 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | cs@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | cs@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 2.008 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 2.011 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | returns@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | returns@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | support@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | support@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 2.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | oracura.in A | errors=['The resolution lifetime expired after 2.003 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | oracura.in A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 2.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | mohammadweex21@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | mohammadweex21@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | support@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | support@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | hr@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | hr@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:45:23 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:45:23 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | cannarma.com A | errors=['The resolution lifetime expired after 2.000 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | info@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | info@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | cannarma.com A | errors=['The resolution lifetime expired after 2.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | support@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | support@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | thedearist.com A | errors=['The resolution lifetime expired after 2.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | community@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | community@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | thedearist.com A | errors=['The resolution lifetime expired after 2.010 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | admin@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | admin@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | koraorganics.com A | errors=['The resolution lifetime expired after 2.011 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | oneloveorganics.com A | errors=['The resolution lifetime expired after 2.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | wareiq.com A | errors=['The resolution lifetime expired after 2.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | theorganicriot.com A | errors=['The resolution lifetime expired after 2.010 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | forest-riot.com A | errors=['The resolution lifetime expired after 2.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | nakedallnatural.com A | errors=['The resolution lifetime expired after 2.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:27 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:45:27 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | gq.comal A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | cuma.meroan@gq.comal | Domain 'gq.comal' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | cuma.meroan@gq.comal | Domain 'gq.comal' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | thebrownbear.ca A | errors=['The resolution lifetime expired after 2.010 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | info@thebrownbear.ca | Domain 'thebrownbear.ca' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | info@thebrownbear.ca | Domain 'thebrownbear.ca' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | mycarmesi.com A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | care@mycarmesi.com | Domain 'mycarmesi.com' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | care@mycarmesi.com | Domain 'mycarmesi.com' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | daybreak-official.com A | errors=['The resolution lifetime expired after 2.006 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | support@daybreak-official.com | Domain 'daybreak-official.com' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | support@daybreak-official.com | Domain 'daybreak-official.com' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | betterdaysco.com A | errors=['The resolution lifetime expired after 2.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | customersupport@betterdaysco.com | Domain 'betterdaysco.com' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | customersupport@betterdaysco.com | Domain 'betterdaysco.com' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | daysahead.nl A | errors=['The resolution lifetime expired after 2.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | info@daysahead.nl | Domain 'daysahead.nl' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | info@daysahead.nl | Domain 'daysahead.nl' does not exist
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | territoryahead.com A | errors=['The resolution lifetime expired after 2.012 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:45:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | messages@territoryahead.com | Domain 'territoryahead.com' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | messages@territoryahead.com | Domain 'territoryahead.com' does not exist
+2026-07-02 20:45:31 | INFO     | __main__ | thread=MainThread | Validation complete in 12.4 seconds
+2026-07-02 20:45:31 | INFO     | excel_handler | thread=MainThread | Results saved → output/validation_results.xlsx
+2026-07-02 20:45:31 | INFO     | excel_handler | thread=MainThread | Failed emails saved → output/failed_emails.xlsx
+2026-07-02 20:45:31 | INFO     | __main__ | thread=MainThread | Summary report saved → output/summary_report.txt
+2026-07-02 20:45:31 | INFO     | __main__ | thread=MainThread | All done. Check the 'output/' folder for results.
+2026-07-02 20:52:52 | INFO     | __main__ | thread=MainThread | ============================================================
+2026-07-02 20:52:52 | INFO     | __main__ | thread=MainThread | Email Validation System – starting
+2026-07-02 20:52:52 | INFO     | __main__ | thread=MainThread | Input file: input/Raw_Email.xlsx
+2026-07-02 20:52:52 | INFO     | excel_handler | thread=MainThread | Reading input file: input/Raw_Email.xlsx
+2026-07-02 20:52:52 | INFO     | excel_handler | thread=MainThread | Using column 'Scraped_Email' for email addresses
+2026-07-02 20:52:52 | INFO     | excel_handler | thread=MainThread | Found 27 email addresses
+2026-07-02 20:52:52 | INFO     | __main__ | thread=MainThread | Validating 27 emails with 10 workers...
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 4.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.010 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | example@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | example@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 4.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | returns@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | returns@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 4.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | mohammadweex21@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | mohammadweex21@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 4.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | gmail.com A | errors=['The resolution lifetime expired after 4.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.008 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | sales@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | oracura.in A | errors=['The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | nakednature.in A | errors=['The resolution lifetime expired after 4.001 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | manasdikshit48@gmail.com | Domain 'gmail.com' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | dentalkart.com A | errors=['The resolution lifetime expired after 4.011 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.008 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | oracura.in A | errors=['The resolution lifetime expired after 4.004 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | support@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | support@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | hr@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | hr@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | collaboration@nakednature.in | Domain 'nakednature.in' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | cs@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | cs@dentalkart.com | Domain 'dentalkart.com' does not exist
+2026-07-02 20:53:05 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | support@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:53:05 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | support@oracura.in | Domain 'oracura.in' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | cannarma.com A | errors=['The resolution lifetime expired after 4.006 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.000 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.; Server Do53:218.248.112.225@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | info@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | info@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | cannarma.com A | errors=['The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | thedearist.com A | errors=['The resolution lifetime expired after 4.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | support@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | support@cannarma.com | Domain 'cannarma.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | community@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | community@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | thedearist.com A | errors=['The resolution lifetime expired after 4.001 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.001 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | koraorganics.com A | errors=['The resolution lifetime expired after 4.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | admin@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | admin@thedearist.com | Domain 'thedearist.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | usainfo@koraorganics.com | Domain 'koraorganics.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | oneloveorganics.com A | errors=['The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | press@oneloveorganics.com | Domain 'oneloveorganics.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | wareiq.com A | errors=['The resolution lifetime expired after 4.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS query failed | theorganicriot.com A | errors=['The resolution lifetime expired after 4.001 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | support@wareiq.com | Domain 'wareiq.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS query failed | forest-riot.com A | errors=['The resolution lifetime expired after 4.002 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_7 | DNS FAIL | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_7 | INVALID DOMAIN | jane@theorganicriot.com | Domain 'theorganicriot.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_5 | DNS FAIL | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_5 | INVALID DOMAIN | john@forest-riot.com | Domain 'forest-riot.com' does not exist
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS query failed | nakedallnatural.com A | errors=['The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.; Server Do53:218.248.112.225@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:18 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_8 | DNS FAIL | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:53:18 | INFO     | __main__ | thread=ThreadPoolExecutor-0_8 | INVALID DOMAIN | info@nakedallnatural.com | Domain 'nakedallnatural.com' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS query failed | gq.comal A | errors=['The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.013 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_0 | DNS FAIL | cuma.meroan@gq.comal | Domain 'gq.comal' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_0 | INVALID DOMAIN | cuma.meroan@gq.comal | Domain 'gq.comal' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS query failed | thebrownbear.ca A | errors=['The resolution lifetime expired after 4.008 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_4 | DNS FAIL | info@thebrownbear.ca | Domain 'thebrownbear.ca' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_4 | INVALID DOMAIN | info@thebrownbear.ca | Domain 'thebrownbear.ca' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS query failed | mycarmesi.com A | errors=['The resolution lifetime expired after 4.011 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_1 | DNS FAIL | care@mycarmesi.com | Domain 'mycarmesi.com' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_1 | INVALID DOMAIN | care@mycarmesi.com | Domain 'mycarmesi.com' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS query failed | daybreak-official.com A | errors=['The resolution lifetime expired after 4.009 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.014 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_6 | DNS FAIL | support@daybreak-official.com | Domain 'daybreak-official.com' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_6 | INVALID DOMAIN | support@daybreak-official.com | Domain 'daybreak-official.com' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS query failed | betterdaysco.com A | errors=['The resolution lifetime expired after 4.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_2 | DNS FAIL | customersupport@betterdaysco.com | Domain 'betterdaysco.com' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_2 | INVALID DOMAIN | customersupport@betterdaysco.com | Domain 'betterdaysco.com' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS query failed | daysahead.nl A | errors=['The resolution lifetime expired after 4.007 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.005 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_3 | DNS FAIL | info@daysahead.nl | Domain 'daysahead.nl' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_3 | INVALID DOMAIN | info@daysahead.nl | Domain 'daysahead.nl' does not exist
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS query failed | territoryahead.com A | errors=['The resolution lifetime expired after 4.008 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.', 'The resolution lifetime expired after 4.015 seconds: Server Do53:218.248.112.193@53 answered The DNS operation timed out.']
+2026-07-02 20:53:31 | DEBUG    | dns_checker | thread=ThreadPoolExecutor-0_9 | DNS FAIL | messages@territoryahead.com | Domain 'territoryahead.com' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=ThreadPoolExecutor-0_9 | INVALID DOMAIN | messages@territoryahead.com | Domain 'territoryahead.com' does not exist
+2026-07-02 20:53:31 | INFO     | __main__ | thread=MainThread | Validation complete in 39.4 seconds
+2026-07-02 20:53:31 | INFO     | excel_handler | thread=MainThread | Results saved → output/validation_results.xlsx
+2026-07-02 20:53:31 | INFO     | excel_handler | thread=MainThread | Failed emails saved → output/failed_emails.xlsx
+2026-07-02 20:53:31 | INFO     | __main__ | thread=MainThread | Summary report saved → output/summary_report.txt
+2026-07-02 20:53:31 | INFO     | __main__ | thread=MainThread | All done. Check the 'output/' folder for results.

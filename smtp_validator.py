@@ -137,11 +137,29 @@ def verify_mailbox(email: str, mx_hosts: list[str]) -> dict:
         return cached
 
     if not mx_hosts:
-        return _result(email, STATUS_TEMPORARY_FAILURE, "NO_MX_HOSTS_PROVIDED", "N/A")
+        return _result(email, STATUS_UNKNOWN, "NO_MX_HOSTS_PROVIDED", "N/A")
 
     last_error = "No connection attempt made"
     smtp_started = time.perf_counter()
-    mx_hosts = mx_hosts[: max(1, SMTP_MAX_MX_HOSTS)]
+
+    # Sanitize MX hosts to avoid passing empty/malformed hostnames into smtplib.
+    cleaned_mx_hosts: list[str] = []
+    for mx in (mx_hosts or []):
+        mx_clean = (mx or "").strip().strip(".")
+        if mx_clean:
+            cleaned_mx_hosts.append(mx_clean)
+
+    mx_hosts = cleaned_mx_hosts[: max(1, SMTP_MAX_MX_HOSTS)]
+
+    if not mx_hosts:
+        return _result(
+            email,
+            STATUS_UNKNOWN,
+            "NO_USABLE_MX_HOSTS_AFTER_CLEANING",
+            smtp_response="N/A",
+        )
+
+    transport_failure = False
 
     for mx in mx_hosts:
         if time.perf_counter() - smtp_started > SMTP_TOTAL_TIMEOUT_SECONDS:
@@ -190,24 +208,36 @@ def verify_mailbox(email: str, mx_hosts: list[str]) -> dict:
                 return result
 
             except smtplib.SMTPConnectError as exc:
+                transport_failure = True
                 last_error = f"Connection error to {mx}: {exc}"
                 log.debug("SMTP connect error (attempt %d) | %s | %s",
                           attempt, email, last_error)
                 should_retry = attempt <= SMTP_RETRIES
 
             except smtplib.SMTPServerDisconnected as exc:
+                transport_failure = True
                 last_error = f"Server disconnected ({mx}): {exc}"
                 log.debug("SMTP disconnect | %s | %s", email, last_error)
                 break  # No point retrying same host
 
             except (socket.timeout, TimeoutError):
+                transport_failure = True
                 last_error = f"Timeout connecting to {mx}"
                 log.debug("SMTP timeout | %s | %s", email, last_error)
                 break  # Move to next MX
 
             except OSError as exc:
+                transport_failure = True
                 last_error = f"Network error ({mx}): {exc}"
                 log.debug("SMTP OS error | %s | %s", email, last_error)
+                break
+
+            except smtplib.SMTPException as exc:
+                # Covers other SMTP-layer failures that still represent transport/connect issues.
+                # Without this, some connection failures can slip through and be treated as TEMPORARY_FAILURE.
+                transport_failure = True
+                last_error = f"SMTP transport error ({mx}): {exc}"
+                log.debug("SMTP transport error | %s | %s", email, last_error)
                 break
 
             if time.perf_counter() - smtp_started > SMTP_TOTAL_TIMEOUT_SECONDS:
@@ -219,7 +249,8 @@ def verify_mailbox(email: str, mx_hosts: list[str]) -> dict:
                 time.sleep(backoff)
 
     log.debug("SMTP exhausted all hosts | %s | %s", email, last_error)
-    result = _result(email, STATUS_TEMPORARY_FAILURE, last_error, "N/A")
+    final_status = STATUS_UNKNOWN if transport_failure else STATUS_TEMPORARY_FAILURE
+    result = _result(email, final_status, last_error, "N/A")
     result.update(
         {
             "smtp_code": 0,
@@ -290,7 +321,7 @@ def _smtp_check(email: str, mx_host: str) -> SMTPCheckResult:
         features = {k.lower(): v for k, v in getattr(smtp, "esmtp_features", {}).items()}
         supports_starttls = "starttls" in features
 
-        if supports_starttls:
+        if supports_starttls and mx_host:
             try:
                 tls_code, tls_msg = smtp.starttls()
                 transcript.append(f"STARTTLS -> {tls_code} {tls_msg}")
@@ -302,6 +333,9 @@ def _smtp_check(email: str, mx_host: str) -> SMTPCheckResult:
                         tls_cipher = str(cipher[0])
             except smtplib.SMTPException as exc:
                 transcript.append(f"STARTTLS_FAILED -> {exc}")
+            except ValueError as exc:
+                # Defensive: avoid propagating ssl server_hostname errors.
+                transcript.append(f"STARTTLS_FAILED_VALUEERROR -> {exc}")
 
         mail_code, mail_msg = smtp.mail(SMTP_SENDER)
         transcript.append(f"MAIL FROM -> {mail_code} {mail_msg}")

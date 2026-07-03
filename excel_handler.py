@@ -65,12 +65,13 @@ def read_emails(filepath: str) -> list[str]:
     log.info("Reading input file: %s", filepath)
     df = pd.read_excel(filepath, dtype=str)
 
-    # Find the email column
-    col = _find_column(df, "mail id") or df.columns[0]
-    log.info("Using column '%s' for email addresses", col)
+    # Find the email column, but fall back safely if headers are numeric or mixed.
+    col = _find_column(df, "mail id")
+    if col is None:
+        col = df.columns[0]
 
-    emails = df[col].dropna().str.strip().tolist()
-    emails = [e for e in emails if e]  # remove blank strings
+    emails = _extract_column_values(df, col)
+    log.info("Using column '%s' for email addresses", _column_text(col))
     log.info("Found %d email addresses", len(emails))
     return emails
 
@@ -90,8 +91,12 @@ def write_results(results: list[dict]) -> None:
 
     wb = _build_workbook(df, sheet_name="Validation Results")
     _add_summary_sheet(wb, results)
-    wb.save(OUTPUT_EXCEL)
-    log.info("Results saved → %s", OUTPUT_EXCEL)
+
+    _save_workbook_resiliently(
+        wb,
+        target_path=OUTPUT_EXCEL,
+        purpose="Results",
+    )
 
 
 def write_failed_emails(results: list[dict]) -> None:
@@ -114,18 +119,91 @@ def write_failed_emails(results: list[dict]) -> None:
 
     wb = _build_workbook(df, sheet_name="Failed Emails")
     _add_summary_sheet(wb, failed)
-    wb.save(FAILED_EXCEL)
-    log.info("Failed emails saved → %s (%d rows)", FAILED_EXCEL, len(failed))
+
+    _save_workbook_resiliently(
+        wb,
+        target_path=FAILED_EXCEL,
+        purpose="Failed emails",
+    )
 
 
 # ── Private helpers ───────────────────────────────────────────────────────────
 
+def _save_workbook_resiliently(wb: Workbook, target_path: str, purpose: str) -> None:
+    """
+    Save workbook to `target_path`, working around Windows file locks (Excel open)
+    by saving to a temp file first and then atomically replacing.
+
+    If replace fails due to PermissionError, writes to a timestamped fallback file.
+    """
+    import time
+    import uuid
+
+    target_dir = os.path.dirname(target_path) or "."
+    os.makedirs(target_dir, exist_ok=True)
+
+    base_name = os.path.basename(target_path)
+    tmp_path = os.path.join(
+        target_dir,
+        f".{base_name}.tmp_{os.getpid()}_{uuid.uuid4().hex[:8]}",
+    )
+
+    # 1) Save to temp first.
+    wb.save(tmp_path)
+
+    # 2) Try atomic replace.
+    try:
+        os.replace(tmp_path, target_path)
+        log.info("%s saved → %s", purpose, target_path)
+        return
+    except PermissionError:
+        # 3) Fallback: write to timestamped filename instead of crashing.
+        ts = time.strftime("%Y%m%d_%H%M%S")
+        fallback_path = os.path.join(
+            target_dir, f"{os.path.splitext(base_name)[0]}_{ts}.xlsx"
+        )
+        try:
+            os.replace(tmp_path, fallback_path)
+        except PermissionError:
+            log.exception(
+                "%s could not overwrite locked file and fallback also failed (PermissionError). target=%s fallback=%s",
+                purpose,
+                target_path,
+                fallback_path,
+            )
+            raise
+        log.warning(
+            "%s could not overwrite locked file (PermissionError). Wrote fallback → %s",
+            purpose,
+            fallback_path,
+        )
+        return
+
 def _find_column(df: pd.DataFrame, keyword: str) -> str | None:
     """Return the first column name whose lowercase form contains keyword."""
     for col in df.columns:
-        if keyword in col.lower():
+        col_name = _column_text(col)
+        if keyword in col_name.lower():
             return col
     return None
+
+
+def _column_text(column: object) -> str:
+    """Convert any Excel column label to a safe string for comparison."""
+    if column is None:
+        return ""
+    return str(column).strip()
+
+
+def _extract_column_values(df: pd.DataFrame, column: object) -> list[str]:
+    """Return cleaned string values from a column label or positional fallback."""
+    if column in df.columns:
+        series = df[column]
+    else:
+        series = df.iloc[:, 0]
+
+    values = series.dropna().astype(str).map(str.strip).tolist()
+    return [value for value in values if value]
 
 
 def _build_workbook(df: pd.DataFrame, sheet_name: str) -> Workbook:
